@@ -33,7 +33,6 @@ export default function Home() {
 				);
 
 				// unint8 array
-				// this one you faggot
 				// data is unint8clampedarray
 				const data = imageData.data;
 				console.log(data);
