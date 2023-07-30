@@ -1,5 +1,4 @@
 import * as ort from 'onnxruntime-web';
-import * as imageUtils from '../utils/imageHelper';
 
 
 /*
@@ -73,12 +72,31 @@ export default async function processFrame(
 	width: number,
 	height: number,
 ) {
-	// 1. Convert image to ort.Tensor
-	const imageTensor = await imageUtils.getImageTensorFromPath(
-		frame,
-		width,
-		height,
+	const tensor = await ort.Tensor.fromImage(frame);
+	console.log(tensor);
+
+	const session = await ort.InferenceSession.create(
+		'/models/model.onnx',
+		{
+			executionProviders: ['webgl'],
+			graphOptimizationLevel: 'all',
+		},
 	);
+
+	const input = new ort.Tensor(
+		'float32',
+		tensor.data,
+		[1, 3, 224, 224],
+	);
+
+	console.log(input);
+
+	const feeds = {
+		'input.1': input,
+	};
+	const output = await session.run(feeds);
+
+	console.log('o' + output);
 
 	return frame;
 }
