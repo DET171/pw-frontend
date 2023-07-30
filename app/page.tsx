@@ -1,48 +1,42 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import Display from './Display';
+
 
 export default function Home() {
-	const canvasRef = useRef<HTMLCanvasElement>(null);
-	// display webcam in canvas
-	useEffect(() => {
-		(async () => {
-			const stream = await navigator.mediaDevices.getUserMedia({
-				video: {
-					frameRate: {
-						exact: 10,
-					},
-				},
-			});
-
-			// display the video in the canvas
-			const canvas = canvasRef.current;
-			if (!canvas) return;
-			const ctx = canvas.getContext('2d');
-			if (!ctx) return;
-			const video = document.createElement('video');
-			video.srcObject = stream;
-			video.play();
-			setInterval(() => {
-				ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-				const imageData = ctx.getImageData(
-					0,
-					0,
-					canvas.width,
-					canvas.height,
-				);
-
-				// unint8 array
-				// data is unint8clampedarray
-				const data = imageData.data;
-				console.log(data);
-			}, 1000);
-		})();
-	}, []);
+	const [panel1Value, setPanel1Value] = useState(0);
+	const [panel2Value, setPanel2Value] = useState(0);
+	const [panel3Value, setPanel3Value] = useState(0);
 
 	return (
-		<div className='w-full h-96'>
-			<canvas className='h-full' id='canvas' ref={canvasRef}></canvas>
+		<div className='grid grid-cols-4 h-full'>
+			<Display className='col-span-3 mr-0' />
+			<div className='grid grid-cols-1 gap-6 col-span-1 bg-gray-200 p-4'>
+				<div>
+					<h2 className='text-lg font-bold'>Current Count</h2>
+					<p className='text-3xl font-bold'>{panel1Value}</p>
+				</div>
+				<div>
+					<h2 className='text-lg font-bold'>Panel 2</h2>
+					<p className='text-3xl font-bold'>{panel2Value}</p>
+					<button
+						className='px-4 py-2 mt-4 text-white bg-blue-500 rounded-md'
+						onClick={() => setPanel2Value(panel2Value + 1)}
+					>
+						Increment
+					</button>
+				</div>
+				<div>
+					<h2 className='text-lg font-bold'>Panel 3</h2>
+					<p className='text-3xl font-bold'>{panel3Value}</p>
+					<button
+						className='px-4 py-2 mt-4 text-white bg-blue-500 rounded-md'
+						onClick={() => setPanel3Value(panel3Value + 1)}
+					>
+						Increment
+					</button>
+				</div>
+			</div>
 		</div>
 	);
 }
