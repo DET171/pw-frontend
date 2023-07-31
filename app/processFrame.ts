@@ -73,11 +73,6 @@ export default async function processFrame(
 	width: number,
 	height: number,
 ) {
-	// resize frame to 224 x 224
-	frame = await Jimp.default.read(frame).then((image) => {
-		return image.resize(224, 224).getBufferAsync(Jimp.MIME_PNG);
-	});
-
 	const tensor = await ort.Tensor.fromImage(frame);
 
 	const session = await ort.InferenceSession.create(
