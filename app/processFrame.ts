@@ -73,7 +73,7 @@ export default async function processFrame(
 	width: number,
 	height: number,
 ) {
-	const tensor = await ort.Tensor.fromImage(frame);
+	const tensor = await ort.Tensor.fromImage(frame, { resizedWidth: 224, resizedHeight: 224 });
 
 	const session = await ort.InferenceSession.create(
 		'/models/model.onnx',
@@ -81,6 +81,12 @@ export default async function processFrame(
 			executionProviders: ['webgl'],
 			graphOptimizationLevel: 'all',
 		},
+	);
+
+	const dummyTensor = new ort.Tensor(
+		'float32',
+		new Float32Array(3 * 224 * 224),
+		[1, 3, 224, 224],
 	);
 
 	const input = new ort.Tensor(
@@ -94,7 +100,6 @@ export default async function processFrame(
 	};
 	const output = await session.run(feeds);
 
-	console.log('o' + output);
 
 	return frame;
 }
