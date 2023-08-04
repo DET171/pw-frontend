@@ -16,8 +16,6 @@ export default async function processFrame(
 
 
 	const tensor = await ort.Tensor.fromImage(frame);
-	console.log(tensor.size);
-	console.log(tensor);
 
 	const session = await ort.InferenceSession.create(
 		'/models/model.onnx',

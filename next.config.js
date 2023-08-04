@@ -14,14 +14,10 @@ const nextConfig = {
 				patterns: [
 					{
 						from: './node_modules/onnxruntime-web/dist/ort-wasm.wasm',
-						to: 'static/chunks/pages',
+						to: 'static/chunks/app',
 					}, {
 						from: './node_modules/onnxruntime-web/dist/ort-wasm-simd.wasm',
-						to: 'static/chunks/pages',
-					},
-					{
-						from: './model',
-						to: 'static/chunks/pages',
+						to: 'static/chunks/app',
 					},
 				],
 			}),
