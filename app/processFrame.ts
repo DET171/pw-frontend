@@ -12,7 +12,7 @@ export default async function processFrame(
 	canvas.height = 224;
 	const ctx = canvas.getContext('2d');
 	ctx?.putImageData(frame, 0, 0);
-	frame = ctx?.getImageData(0, 0, 224, 224);
+	frame = ctx!.getImageData(0, 0, 224, 224);
 
 
 	const tensor = await ort.Tensor.fromImage(frame);
@@ -22,7 +22,7 @@ export default async function processFrame(
 	const session = await ort.InferenceSession.create(
 		'/models/model.onnx',
 		{
-			executionProviders: ['webgl'],
+			executionProviders: ['wasm'],
 			graphOptimizationLevel: 'all',
 		},
 	);
@@ -38,7 +38,7 @@ export default async function processFrame(
 		'input.1': input,
 	};
 	const output = await session.run(feeds);
-
+	console.log(output);
 
 	return frame;
 }
