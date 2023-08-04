@@ -1,5 +1,4 @@
 import * as ort from 'onnxruntime-web';
-import * as Jimp from 'jimp';
 
 
 export default async function processFrame(
@@ -7,7 +6,18 @@ export default async function processFrame(
 	width: number,
 	height: number,
 ) {
-	const tensor = await ort.Tensor.fromImage(frame, { resizedWidth: 224, resizedHeight: 224 });
+	// resize frame to 224x224
+	const canvas = document.createElement('canvas');
+	canvas.width = 224;
+	canvas.height = 224;
+	const ctx = canvas.getContext('2d');
+	ctx?.putImageData(frame, 0, 0);
+	frame = ctx?.getImageData(0, 0, 224, 224);
+
+
+	const tensor = await ort.Tensor.fromImage(frame);
+	console.log(tensor.size);
+	console.log(tensor);
 
 	const session = await ort.InferenceSession.create(
 		'/models/model.onnx',
@@ -17,11 +27,6 @@ export default async function processFrame(
 		},
 	);
 
-	const dummyTensor = new ort.Tensor(
-		'float32',
-		new Float32Array(3 * 224 * 224),
-		[1, 3, 224, 224],
-	);
 
 	const input = new ort.Tensor(
 		'float32',

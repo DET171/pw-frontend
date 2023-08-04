@@ -50,7 +50,7 @@ export default function Home(props: any) {
 				// put the processed frame back into the canvas
 
 				resultCtx.putImageData(processedFrame, 0, 0);
-			}, 200);
+			}, 1000);
 		})();
 	}, []);
 
