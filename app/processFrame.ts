@@ -36,7 +36,17 @@ export default async function processFrame(
 		'input.1': input,
 	};
 	const output = await session.run(feeds);
-	console.log(output);
+	// this 1, 1, 224, 224
 
-	return frame;
+	const arr = Array.from(output['75'].data);
+
+	// find the mean of the array
+	const sum = arr.reduce((a, b) => a + b, 0);
+
+	console.log(sum);
+
+	return {
+		frame,
+		count: sum,
+	};
 }

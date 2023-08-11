@@ -3,7 +3,11 @@ import { useEffect, useRef, useState } from 'react';
 // Import @tensorflow/tfjs-core
 import processFrame from './processFrame';
 
-export default function Home(props: any) {
+export default function Home({
+	updateCount,
+}: {
+	updateCount: (count: number) => void;
+}) {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const resultCanvasRef = useRef<HTMLCanvasElement>(null);
 	// display webcam in canvas
@@ -49,7 +53,8 @@ export default function Home(props: any) {
 
 				// put the processed frame back into the canvas
 
-				resultCtx.putImageData(processedFrame, 0, 0);
+				resultCtx.putImageData(processedFrame.frame, 0, 0);
+				updateCount((processedFrame.count as unknown as number).toFixed(0));
 			}, 1000);
 		})();
 	}, []);
