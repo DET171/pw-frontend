@@ -5,6 +5,7 @@ import processFrame from './processFrame';
 
 export default function Home({
 	updateCount,
+	...props
 }: {
 	updateCount: (count: number) => void;
 }) {
