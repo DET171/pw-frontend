@@ -61,9 +61,13 @@ export default function Home({
 				const processedFrame = await processFrame(imageData, canvas.width, canvas.height);
 
 				// put the processed frame back into the canvas
+				const img = new Image();
+				img.src = processedFrame.frame;
+				img.onload = () => {
+					resultCtx.drawImage(img, 0, 0);
+				};
 
-				// resultCtx.putImageData(processedFrame.frame, 0, 0);
-				// updateCount(((processedFrame.count as unknown as number).toFixed(0)) as unknown as number);
+				updateCount(((processedFrame.count as unknown as number).toFixed(0)) as unknown as number);
 			}, 1000);
 		})();
 	}, []);
