@@ -19,6 +19,12 @@ export default function Home({
 					frameRate: {
 						exact: 10,
 					},
+					width: {
+						exact: 256 * 3,
+					},
+					height: {
+						exact: 196 * 3,
+					},
 				},
 			});
 
