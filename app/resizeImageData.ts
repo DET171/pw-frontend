@@ -9,6 +9,6 @@ export async function resizeImageData(imageData: ImageData, width: number, heigh
 	canvas.height = resizeHeight;
 	const ctx = canvas.getContext('2d');
 	ctx!.scale(resizeWidth / imageData.width, resizeHeight / imageData.height);
-	ctx!.drawImage(ibm, 0, 0);
+	ctx!.drawImage(ibm, 0, 0, resizeWidth, resizeHeight);
 	return ctx!.getImageData(0, 0, resizeWidth, resizeHeight);
 }

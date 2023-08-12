@@ -5,26 +5,28 @@ import processFrame from './processFrame';
 
 export default function Home({
 	updateCount,
+	deviceId,
 	...props
 }: {
 	updateCount: (count: number) => void;
+	deviceId: string;
 }) {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const resultCanvasRef = useRef<HTMLCanvasElement>(null);
 	// display webcam in canvas
 	useEffect(() => {
 		(async () => {
+			// get permission first
+			await navigator.mediaDevices.getUserMedia({
+				video: true,
+			});
 			const stream = await navigator.mediaDevices.getUserMedia({
 				video: {
-					frameRate: {
-						exact: 10,
+					deviceId: {
+						exact: deviceId,
 					},
-					width: {
-						exact: 256 * 3,
-					},
-					height: {
-						exact: 196 * 3,
-					},
+					width: 1280,
+					height: 720,
 				},
 			});
 
@@ -58,13 +60,17 @@ export default function Home({
 				// data is unint8clampedarray
 
 				// process the frame
-				const processedFrame = await processFrame(imageData, canvas.width, canvas.height);
+				const processedFrame = await processFrame(canvas.toDataURL(), canvas.width, canvas.height);
 
 				// put the processed frame back into the canvas
+				const img = new Image();
+				img.src = processedFrame.frame;
+				img.onload = () => {
+					resultCtx.drawImage(img, 0, 0, 224, 224);
+				};
 
-				resultCtx.putImageData(processedFrame.frame, 0, 0);
 				updateCount(((processedFrame.count as unknown as number).toFixed(0)) as unknown as number);
-			}, 1000);
+			}, 1000 * 5);
 		})();
 	}, []);
 
