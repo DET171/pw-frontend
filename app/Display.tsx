@@ -58,7 +58,7 @@ export default function Home({
 				// data is unint8clampedarray
 
 				// process the frame
-				// const processedFrame = await processFrame(imageData, canvas.width, canvas.height);
+				const processedFrame = await processFrame(imageData, canvas.width, canvas.height);
 
 				// put the processed frame back into the canvas
 
