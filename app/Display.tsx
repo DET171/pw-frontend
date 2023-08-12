@@ -19,19 +19,21 @@ export default function Home({
 					frameRate: {
 						exact: 10,
 					},
-					width: 1366,
-					height: 768,
 				},
 			});
 
 			// display the video in the canvas
 			const canvas = canvasRef.current;
 			if (!canvas) return;
-			const ctx = canvas.getContext('2d');
+			const ctx = canvas.getContext('2d', {
+				willReadFrequently: true,
+			});
 			if (!ctx) return;
 			const resultCanvas = resultCanvasRef.current;
 			if (!resultCanvas) return;
-			const resultCtx = resultCanvas.getContext('2d');
+			const resultCtx = resultCanvas.getContext('2d', {
+				willReadFrequently: true,
+			});
 			if (!resultCtx) return;
 			const video = document.createElement('video');
 			video.srcObject = stream;
@@ -55,7 +57,7 @@ export default function Home({
 				// put the processed frame back into the canvas
 
 				resultCtx.putImageData(processedFrame.frame, 0, 0);
-				updateCount((processedFrame.count as unknown as number).toFixed(0));
+				updateCount(((processedFrame.count as unknown as number).toFixed(0)) as unknown as number);
 			}, 1000);
 		})();
 	}, []);

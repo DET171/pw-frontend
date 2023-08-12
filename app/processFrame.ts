@@ -1,5 +1,5 @@
 import * as ort from 'onnxruntime-web';
-
+import { resizeImageData } from './resizeImageData';
 
 export default async function processFrame(
 	frame: ImageData,
@@ -7,12 +7,7 @@ export default async function processFrame(
 	height: number,
 ) {
 	// resize frame to 224x224
-	const canvas = document.createElement('canvas');
-	canvas.width = 224;
-	canvas.height = 224;
-	const ctx = canvas.getContext('2d');
-	ctx?.putImageData(frame, 0, 0);
-	frame = ctx!.getImageData(0, 0, 224, 224);
+	if (width * height !== 50176) frame = await resizeImageData(frame, 224 * (8 / 7), 224 / (8 / 7));
 
 
 	const tensor = await ort.Tensor.fromImage(frame);
