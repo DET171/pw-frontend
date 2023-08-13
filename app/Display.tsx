@@ -5,9 +5,11 @@ import processFrame from './processFrame';
 
 export default function Home({
 	updateCount,
+	deviceId,
 	...props
 }: {
 	updateCount: (count: number) => void;
+	deviceId: string;
 }) {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const resultCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -16,14 +18,11 @@ export default function Home({
 		(async () => {
 			const stream = await navigator.mediaDevices.getUserMedia({
 				video: {
+					deviceId: {
+						exact: deviceId,
+					},
 					frameRate: {
-						exact: 10,
-					},
-					width: {
-						exact: 256 * 3,
-					},
-					height: {
-						exact: 196 * 3,
+						ideal: 15,
 					},
 				},
 			});
@@ -75,7 +74,7 @@ export default function Home({
 				resultCtx.putImageData(processedImageData, 0, 0);
 
 				updateCount(((processedFrame.count as unknown as number).toFixed(0)) as unknown as number);
-			}, 1000);
+			}, 1000 * 5);
 		})();
 	}, []);
 
