@@ -4783,6 +4783,7 @@ next@latest:
   version: 0.0.0-use.local
   resolution: "pw-front@workspace:."
   dependencies:
+    "@jimp/types": ^0.22.10
     "@tensorflow/tfjs": ^4.9.0
     "@tensorflow/tfjs-backend-webgl": ^4.8.0
     "@types/node": 20.4.2

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@jimp/types": "^0.22.10",
     "@tensorflow/tfjs": "^4.9.0",
     "@tensorflow/tfjs-backend-webgl": "^4.8.0",
     "@types/node": "20.4.2",

@@ -13,9 +13,11 @@ export default async function processFrame(
 		224,
 	];
 
-	const image = await Jimp.read(frame).then((image) => {
+	// eslint-disable-next-line no-shadow
+	const image = await Jimp.read(frame).then((image: Jimp) => {
 		return image.resize(224, 224);
 	});
+
 
 	var imageBufferData = image.bitmap.data;
 	const [redArray, greenArray, blueArray] = new Array(new Array<number>(), new Array<number>(), new Array<number>());
@@ -62,6 +64,8 @@ export default async function processFrame(
 	// this 1, 1, 224, 224
 
 	const arr = Array.from(output['75'].data);
+	// convert arr (Float32Array) to ImageData
+
 
 	// find the mean of the array
 	const sum = arr.reduce((a, b) => a + b, 0);
@@ -71,5 +75,7 @@ export default async function processFrame(
 	return {
 		frame,
 		count: sum,
+		data: output['75'].data as Float32Array,
+		reiszedImg: image.bitmap.data,
 	};
 }
