@@ -62,6 +62,9 @@ export default async function processFrame(
 	};
 	const output = await session.run(feeds);
 	// this 1, 1, 224, 224
+	console.log(output);
+	console.log('stringified version below');
+	console.log(JSON.stringify(output, null, 2));
 
 	const arr = Array.from(output['75'].data);
 	// convert arr (Float32Array) to ImageData
