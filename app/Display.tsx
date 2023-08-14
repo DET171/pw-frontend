@@ -58,7 +58,7 @@ export default function Home({
 				const dataURL = canvas.toDataURL('image/png');
 
 				// process the frame
-				const processedFrame = await processFrame(dataURL, canvas.width, canvas.height);
+				const processedFrame = await processFrame(dataURL, canvas.width, canvas.height, imageData);
 
 				// put the processed frame back into the canvas
 				// const img = new Image();
@@ -66,12 +66,8 @@ export default function Home({
 				// img.onload = () => {
 				// 	resultCtx.drawImage(img, 0, 0);
 				// };
-				const processedImageData = new ImageData(
-					new Uint8ClampedArray(processedFrame.reiszedImg),
-					224,
-					224,
-				);
-				resultCtx.putImageData(processedImageData, 0, 0);
+
+				resultCtx.putImageData(processedFrame.reiszedImg, 0, 0);
 
 				updateCount(((processedFrame.count as unknown as number).toFixed(0)) as unknown as number);
 			}, 1000 * 5);

@@ -15,8 +15,8 @@ export default function Home() {
 			const videoDevices = inputDevices.filter(device => device.kind === 'videoinput');
 
 			setDevices(videoDevices);
-			setDeviceId(videoDevices[0].deviceId);
 
+			console.log(videoDevices);
 			console.log(devices);
 		})();
 	}, []);
@@ -31,7 +31,10 @@ export default function Home() {
 				</div>
 				<div>
 					<h2 className='text-lg font-bold'>Select Camera</h2>
-					<select className='w-full' onChange={e => setDeviceId(e.target.value)}>
+					<select className='w-full' onChange={e => {
+						console.log(e.target.value);
+						setDeviceId(e.target.value);
+					}}>
 						{devices.map(device => (
 							<option key={device.deviceId} value={device.deviceId}>{device.label}</option>
 						))}
