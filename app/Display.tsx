@@ -36,6 +36,8 @@ export default function Home({
 			// display the video in the canvas
 			const canvas = canvasRef.current;
 			if (!canvas) return;
+			canvas.height = 1920;
+			canvas.width = 1080;
 			const ctx = canvas.getContext('2d', {
 				willReadFrequently: true,
 			});
@@ -53,6 +55,7 @@ export default function Home({
 			video.play();
 			setInterval(async () => {
 				ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+				console.log(canvas.height, canvas.width);
 
 				const imageData = ctx.getImageData(
 					0,
@@ -75,7 +78,10 @@ export default function Home({
 				// 	resultCtx.drawImage(img, 0, 0);
 				// };
 
-				resultCtx.putImageData(processedFrame.reiszedImg, 0, 0);
+				console.log('processed frame');
+				console.log(processedFrame);
+				resultCtx.putImageData(processedFrame.resizedImage, 0, 0);
+				// resultCtx.drawImage(processedFrame.reiszedImg, 0, 0);
 
 				updateCount(((processedFrame.count as unknown as number).toFixed(0)) as unknown as number);
 			}, 1000 * 5);
