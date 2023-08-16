@@ -25,10 +25,10 @@ export default function Home({
 						ideal: 15,
 					},
 					width: {
-						exact: 1920,
+						ideal: 1920,
 					},
 					height: {
-						exact: 1080,
+						ideal: 1080,
 					},
 				},
 			});
@@ -47,6 +47,8 @@ export default function Home({
 			});
 			if (!resultCtx) return;
 			const video = document.createElement('video');
+			video.width = canvas.width;
+			video.height = canvas.height;
 			video.srcObject = stream;
 			video.play();
 			setInterval(async () => {
@@ -82,8 +84,8 @@ export default function Home({
 
 	return (
 		<div {...props}>
-			<canvas className='w-full hidden' id='canvas' ref={canvasRef}></canvas>
-			<canvas className='w-full' id='resultCanvas' ref={resultCanvasRef}></canvas>
+			<canvas className='w-full h-full hidden' id='canvas' ref={canvasRef}></canvas>
+			<canvas className='w-full h-full' id='resultCanvas' ref={resultCanvasRef}></canvas>
 		</div>
 	);
 }

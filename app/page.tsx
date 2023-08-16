@@ -26,7 +26,7 @@ export default function Home() {
 
 	return (
 		<div className='grid grid-cols-3 h-full'>
-			{deviceId && <Display className='col-span-2 mr-0' updateCount={setCount} deviceId={deviceId} />}
+			{deviceId && <Display className='col-span-2 mr-0 w-full' updateCount={setCount} deviceId={deviceId} />}
 			<div className='grid grid-cols-1 gap-6 col-span-1 bg-gray-200 p-4'>
 				<div>
 					<h2 className='text-lg font-bold'>Current Count</h2>
