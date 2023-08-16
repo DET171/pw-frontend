@@ -24,6 +24,12 @@ export default function Home({
 					frameRate: {
 						ideal: 15,
 					},
+					width: {
+						exact: 1920,
+					},
+					height: {
+						exact: 1080,
+					},
 				},
 			});
 
