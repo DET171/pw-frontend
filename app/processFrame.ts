@@ -1,6 +1,6 @@
 import * as ort from 'onnxruntime-web';
 import Jimp from 'jimp/es';
-import resizeImageDataTo224x224 from './resizeImageData';
+import resizeImageDataToMultiplesOf16 from './resizeImageData';
 
 export default async function processFrame(
 	url: string /* the data url */,
@@ -53,7 +53,7 @@ export default async function processFrame(
 		},
 	);
 
-	const resizedImage = resizeImageDataTo224x224(imageData);
+	const resizedImage = resizeImageDataToMultiplesOf16(imageData);
 
 	const tensor = await ort.Tensor.fromImage(resizedImage);
 	console.log(tensor);

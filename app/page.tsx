@@ -14,7 +14,10 @@ export default function Home() {
 			const inputDevices = await navigator.mediaDevices.enumerateDevices();
 			const videoDevices = inputDevices.filter(device => device.kind === 'videoinput');
 
-			setDevices(videoDevices);
+			setDevices([
+				{ deviceId: '', groupId: '', kind: 'videoinput', label: 'Select Camera' } as unknown as MediaDeviceInfo,
+				...videoDevices,
+			]);
 
 			console.log(videoDevices);
 			console.log(devices);
