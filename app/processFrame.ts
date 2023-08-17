@@ -61,8 +61,8 @@ export default async function processFrame(
 
 	const input = new ort.Tensor(
 		'float32',
-		// tensor.data,
-		float32Data,
+		tensor.data,
+		// float32Data,
 		[1, 3, 224, 224],
 	);
 
@@ -87,11 +87,11 @@ export default async function processFrame(
 		url,
 		count: sum,
 		data: output['75'].data as Float32Array,
-		// reiszedImg: resizedImage,
-		resizedImage: new ImageData(
-			new Uint8ClampedArray(image.bitmap.data),
-			224,
-			224,
-		),
+		resizedImage: resizedImage,
+		// resizedImage: new ImageData(
+		// 	new Uint8ClampedArray(image.bitmap.data),
+		// 	224,
+		// 	224,
+		// ),
 	};
 }

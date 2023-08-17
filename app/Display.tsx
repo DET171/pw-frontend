@@ -6,9 +6,11 @@ import processFrame from './processFrame';
 export default function Home({
 	updateCount,
 	deviceId,
+	fps,
 	...props
 }: {
 	updateCount: (count: number) => void;
+	fps: number;
 	deviceId: string;
 }) {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -22,7 +24,7 @@ export default function Home({
 						exact: deviceId,
 					},
 					frameRate: {
-						ideal: 15,
+						ideal: 60,
 					},
 					width: {
 						ideal: 1920,
@@ -36,8 +38,8 @@ export default function Home({
 			// display the video in the canvas
 			const canvas = canvasRef.current;
 			if (!canvas) return;
-			canvas.height = 1920;
-			canvas.width = 1080;
+			// canvas.height = 1920;
+			// canvas.width = 1080;
 			const ctx = canvas.getContext('2d', {
 				willReadFrequently: true,
 			});
@@ -84,7 +86,7 @@ export default function Home({
 				// resultCtx.drawImage(processedFrame.reiszedImg, 0, 0);
 
 				updateCount(((processedFrame.count as unknown as number).toFixed(0)) as unknown as number);
-			}, 1000 * 5);
+			}, 1000 / fps);
 		})();
 	}, []);
 
